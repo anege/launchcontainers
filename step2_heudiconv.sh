@@ -1,7 +1,7 @@
-# export basedir=/export/home/glerma/public/Gari/MAGNO2
-# export basedir="/export/home/glerma/glerma/00local/PROYECTOS/MAGNO2/"
-# export subj=10_MAGNO_6979
-# export sess=T01
+
+export basedir=/export/home/agurtubay/lab/MRI/DYSTHAL_MRI/DATA/images
+export subj=002_DYSTHAL_01LH5_077
+export sess=T01
 
 module load singularity/3.5.2
 # Then run it after we create the Nifti/code/convertall.py file

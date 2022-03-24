@@ -13,7 +13,7 @@
     "pretoolpp":"rtppreproc_1.1.3",
     "preanalysispp":"01",
     "codedir":"/dipc/mibarbia/GIT/launchcontainers",
-    "host": "DIPC",
+    "host": "BCBL",
     "logdir":"/scratch/mibarbia/logs",
     "tmpdir":"/scratch/mibarbia/singtmp",
     "container":"/scratch/mibarbia/containers",

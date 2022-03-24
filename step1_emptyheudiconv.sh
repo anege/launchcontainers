@@ -1,5 +1,5 @@
-basedir="/bcbl/home/public/KSHIPRA/dwibygari"
-subj="TEEN_CONT_06_TP1"
+basedir=/export/home/agurtubay/lab/MRI/DYSTHAL_MRI/DATA/images
+subj=002_DYSTHAL_01LH5_077
 
 
 # First run it empty
