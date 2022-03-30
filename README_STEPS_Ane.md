@@ -73,16 +73,22 @@ Build singularity: `singularity build anatrois_4.2.7-7.1.1.sif docker://garikoit
 >ERROR: While performing build: packer failed to pack: while unpacking tmpfs: error unpacking rootfs: unpack layer: unpack entry: usr/bin/fixAllSegmentations: unpack to regular file: short write: write /tmp/build-temp-605206181/rootfs/usr/bin/fixAllSegmentations: no space left on device
 
 Solution: copy container already built from Gari:  
-`cp /export/home/agurtubay/public/Exchange/4Ane/anatrois_4.2.7-7.1.1.sif /export/home/agurtubay/agurtubay/Projects/containers`
+`container_dir=/export/home/agurtubay/agurtubay/Projects/containers`  
+`cp /export/home/agurtubay/public/Exchange/4Ane/anatrois_4.2.7-7.1.1.sif $container_dir`  
+
 
 
 ## 1. convert dicom to nifti in BIDS by calling heudiconv
 
 ### 1.1 generate convertall.py
+- Install heudiconv container. [Follow instructions here](https://heudiconv.readthedocs.io/en/latest/installation.html#singularity)  
+`cd $container_dir`  
+`singularity pull docker://nipy/heudiconv:0.5.4`
 
-- Define basedir and subject ID in step1_emptyheudiconv.sh
+- Edit all the options in step1_emptyheudiconv.sh
 - run shell script:  
-`cd /export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/1_pipe_scripts/launchcontainers`  
+`scripts_dir=/export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/1_pipe_scripts/launchcontainers`  
+`cd $scripts_dir`  
 `bash step1_emptyheudiconv.sh`
 
 ### 1.2 convert using convertall.py generated in the previous step
