@@ -7,7 +7,7 @@ Create new_branch
 Change the active branch to the new branch  
 `git checkout new-branch` 
 
-# STEP 0: Fork and clone  
+# STEP 0: Fork and clone repository 
 
 ![Structure](https://www.toolsqa.com/gallery/Git/2.1_Pull-Request.png)
 ## 0.1 Fork Gari's repository to my Github account 
@@ -54,7 +54,7 @@ Go to your branch
 Merge changes  
 `git merge master`
 
-# STEP 4: Make launchcontainers work
+# STEP 4: Make [launchcontainers](https://github.com/garikoitz/launchcontainers/wiki/How-to-use) work
 ## Prerequisites: 
 Docker (in lmc02) or Singularities (in IPS, cajal, DIPC). In BCBL are already installed. To install them [see here](https://github.com/garikoitz/launchcontainers/wiki/Installation )
 
@@ -70,7 +70,6 @@ Load Singularity module
 
 Build singularity: `singularity build anatrois_4.2.7-7.1.1.sif docker://garikoitz/anatrois:4.2.7-7.1.1`
 
-
 >ERROR: While performing build: packer failed to pack: while unpacking tmpfs: error unpacking rootfs: unpack layer: unpack entry: usr/bin/fixAllSegmentations: unpack to regular file: short write: write /tmp/build-temp-605206181/rootfs/usr/bin/fixAllSegmentations: no space left on device
 
 Solution: copy container already built from Gari:  
@@ -82,11 +81,9 @@ Solution: copy container already built from Gari:
 ### 1.1 generate convertall.py
 
 - Define basedir and subject ID in step1_emptyheudiconv.sh
-- run shell script: 
-    
-    `cd /export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/1_pipe_scripts/launchcontainers` 
-
-    `bash step1_emptyheudiconv.sh`
+- run shell script:  
+`cd /export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/1_pipe_scripts/launchcontainers`  
+`bash step1_emptyheudiconv.sh`
 
 ### 1.2 convert using convertall.py generated in the previous step
 
