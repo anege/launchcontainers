@@ -73,33 +73,51 @@ Build singularity: `singularity build anatrois_4.2.7-7.1.1.sif docker://garikoit
 >ERROR: While performing build: packer failed to pack: while unpacking tmpfs: error unpacking rootfs: unpack layer: unpack entry: usr/bin/fixAllSegmentations: unpack to regular file: short write: write /tmp/build-temp-605206181/rootfs/usr/bin/fixAllSegmentations: no space left on device
 
 Solution: copy container already built from Gari:  
-`container_dir=/export/home/agurtubay/agurtubay/Projects/containers`  
+`container_dir=/bcbl/home/home_a-f/agurtubay/Projects/containers`  
 `cp /export/home/agurtubay/public/Exchange/4Ane/anatrois_4.2.7-7.1.1.sif $container_dir`  
 
 
 
-## 1. convert dicom to nifti in BIDS by calling heudiconv
+## 1. Convert dicom to nifti in BIDS 
 
-### 1.1 generate convertall.py
+### 1.1 Generate convertall.py by calling heudiconv
+
 - Install heudiconv container. [Follow instructions here](https://heudiconv.readthedocs.io/en/latest/installation.html#singularity)  
 `cd $container_dir`  
-`singularity pull docker://nipy/heudiconv:0.5.4`
+`singularity pull docker://nipy/heudiconv:latest`
 
-- Edit all the options in step1_emptyheudiconv.sh
-- run shell script:  
+- Edit all the options in step1_emptyheudiconv.sh. This script calls singularity run, which then calls heudoconv.  
+See singularity run options [here](https://sylabs.io/guides/3.1/user-guide/cli/singularity_run.html#singularity-run)  
+See heudiconv options [here](https://heudiconv.readthedocs.io/en/latest/usage.html#commandline-arguments)
+
+- Run shell script:  
 `scripts_dir=/export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/1_pipe_scripts/launchcontainers`  
 `cd $scripts_dir`  
 `bash step1_emptyheudiconv.sh`
 
-### 1.2 convert using convertall.py generated in the previous step
+- This will create convertall.py once (a  template) and then will use this single one file for all the subjects in the next step
+
+>In my case it didn't create it, so I copied Mengxing's convertall.py
+
+- Edit convertall.py to take the T1 and diff data that you want. It should take the correct data for all the subjects, so different cases need to be taken into account.
+If I have 2 folders per subject and 3 T1s per folder, I only want the T1 from the same date as the diff data
+
+### 1.2 Convert dicom to nifti using convertall.py generated in the previous step
 
 - Define  basedir, subject ID and session ID in step2_heudiconv.sh
-- run shell script: `bash step2_heudiconv.sh`
+- Run shell script:  
+`cd $scripts_dir`  
+`bash step2_heudiconv.sh`
+
+- This will give 3 T1s in some subjects. To solve this,
+Check /export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/2_raw_data/NII/sub-048DYSTHAL06LH4003/ses-T01/sub-048DYSTHAL06LH4003_ses-T01_scans.tsv
+
+and only keep the anat files whose acq-time is the same as the diff 
 
 
-## 2. create symbolic links (to save space when running containers)
+## 2. Create symbolic links (to save space when running containers)
 - Edit example_config_launchcontainer.json as specified [here](https://github.com/garikoitz/launchcontainers/wiki/How-to-use)
-- Edit subSesList.txt
+- Edit subSesList.txt subjects by subject
 - Run createSymLinks: `python3 createSymLinks.py example_config_launchcontainer.json`
 
 ## 3. launch containers: anatROIs, RTP-preproc or RTP-pipeline.
