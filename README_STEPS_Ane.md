@@ -25,7 +25,7 @@ You must configure a remote that points to the upstream repository in Git (Gari'
 Logged in Broadmann, open Terminal.
 
 List the current configured remote repository for your fork.  
-`cd /home/agurtubay/agurtubay/Projects/Dysthal_qMRI/1_pipe_scripts/launchcontainers`   
+`cd /home/agurtubay/agurtubay/Projects/Dysthal/1_pipe_scripts/launchcontainers`   
 `git remote -v`
 
 Specify a new remote upstream repository that will be synced with the fork (se hace a nivel de repositorio, da igual el branch)  
@@ -91,7 +91,7 @@ See singularity run options [here](https://sylabs.io/guides/3.1/user-guide/cli/s
 See heudiconv options [here](https://heudiconv.readthedocs.io/en/latest/usage.html#commandline-arguments)
 
 - Run shell script:  
-`scripts_dir=/export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/1_pipe_scripts/launchcontainers`  
+`scripts_dir=/export/home/agurtubay/agurtubay/Projects/Dysthal/1_pipe_scripts/launchcontainers`  
 `cd $scripts_dir`  
 `bash step1_emptyheudiconv.sh`
 
@@ -99,29 +99,55 @@ See heudiconv options [here](https://heudiconv.readthedocs.io/en/latest/usage.ht
 
 >In my case it didn't create it, so I copied Mengxing's convertall.py
 
-- Edit convertall.py to take the T1 and diff data that you want. It should take the correct data for all the subjects, so different cases need to be taken into account.
+- Edit convertall.py to take the T1 and diff data that you want. It should take the correct data for all the subjects, so different cases need to be taken into account.  
 If I have 2 folders per subject and 3 T1s per folder, I only want the T1 from the same date as the diff data
 
 ### 1.2 Convert dicom to nifti using convertall.py generated in the previous step
 
-- Define  basedir, subject ID and session ID in step2_heudiconv.sh
-- Run shell script:  
+> Make some tests on Brodmann. Edit options in step2_heudiconv.sh and make sure it works   
 `cd $scripts_dir`  
 `bash step2_heudiconv.sh`
 
-- This will give 3 T1s in some subjects. To solve this,
-Check /export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/2_raw_data/NII/sub-048DYSTHAL06LH4003/ses-T01/sub-048DYSTHAL06LH4003_ses-T01_scans.tsv
+Now let's do the same in the IPS cluster:
+- Edit options in in step2_heudiconv_IPS.sh  
 
-and only keep the anat files whose acq-time is the same as the diff 
+- Run shell script through IPS:  qsub_step2.sh calls step2_heudiconv_IPS.  
+`ssh agurtubay@ips-0-3`  
+`qlogin`  
+`cd $scripts_dir`  
+`bash qsub_step2_heudiconv.sh`
+
+- Check whether all files have been well created:  
+`cd $scripts_dir`  
+`bash check_converted_files.sh`
+
+- Rename subjects to and keep conversion information  
+`cd $scripts_dir`  
+`bash rename_subj.sh`
+
+
+- This will give 3 T1s in some subjects. To solve this,
+Check NII/$subject/ses-T01/$subject_ses-T01_scans.tsv
+and if possible only keep the anat files whose acq-time is the same as the diff  
+`cd $scripts_dir`  
+`bash clean_duplicated_T1.sh`
 
 
 ## 2. Create symbolic links (to save space when running containers)
-- Edit example_config_launchcontainer.json as specified [here](https://github.com/garikoitz/launchcontainers/wiki/How-to-use)
-- Edit subSesList.txt subjects by subject
-- Run createSymLinks: `python3 createSymLinks.py example_config_launchcontainer.json`
 
-## 3. launch containers: anatROIs, RTP-preproc or RTP-pipeline.
-- Launch container: `python3 qsub_generic.py example_config_launchcontainer.json` 
+- Edit example_config_launchcontainer.json as specified [here](https://github.com/garikoitz/launchcontainers/wiki/How-to-use)
+
+- Create subSesList.txt in raw_data directory:  
+`cd $scripts_dir`  
+`bash createSubSesList.sh.txt`  
+
+- Run createSymLinks: `python3 createSymLinks.py config_launchcontainer.json`
+
+## 3. launch containers: anatROIs, RTP-preproc or RTP-pipeline
+
+- I have to edit qsub_generic.sh or qsub_generic.py?
+
+- Launch container: `python3 qsub_generic.py config_launchcontainer.json` 
 
 
 

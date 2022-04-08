@@ -12,8 +12,8 @@ ls -l
 hourly.2022-04-07_1005
 
 echo "to copy folder..."
-cd /export/home/agurtubay/agurtubay/Projects/Dysthal/2_raw_data/NII/.snapshot/hourly.2022-04-07_1005
-destination_folder=/export/home/agurtubay/agurtubay/Projects/Dysthal/2_raw_data/NII/
+cd /export/home/agurtubay/agurtubay/Projects/Dysthal/2_raw_data/NII/.snapshot/hourly.2022-04-07_1005/sub-046DYSTHAL01LH4000/
+destination_folder=/export/home/agurtubay/agurtubay/Projects/Dysthal/2_raw_data/NII_BERRI/sub-046DYSTHAL01LH4000/
 
 
 cp -r * $destination_folder

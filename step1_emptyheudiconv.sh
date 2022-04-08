@@ -1,4 +1,4 @@
-export basedir=/export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/2_raw_data
+export basedir=/export/home/agurtubay/agurtubay/Projects/Dysthal/2_raw_data
 # basedir=/export/home/agurtubay/lab/MRI/DYSTHAL_MRI/DATA/images
 export subj=048_DYSTHAL_06LH4_003
 export container_dir=/export/home/agurtubay/agurtubay/Projects/containers

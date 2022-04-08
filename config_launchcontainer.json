@@ -12,10 +12,10 @@
       "prefs_zipname":"",
       "pretoolpp":"",
       "preanalysispp":"",
-      "codedir":"/export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/1_pipe_scripts/launchcontainers",
+      "codedir":"/export/home/agurtubay/agurtubay/Projects/Dysthal/1_pipe_scripts/launchcontainers",
       "host": "BCBL",
-      "logdir":"/export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/3_analysis/logs",
-      "tmpdir":"/export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/3_analysis/sing_tmp",
+      "logdir":"/export/home/agurtubay/agurtubay/Projects/Dysthal/3_analysis/logs",
+      "tmpdir":"/export/home/agurtubay/agurtubay/Projects/Dysthal/3_analysis/sing_tmp",
       "container":"/export/home/agurtubay/agurtubay/Projects/containers",
       "qsub":"true"
     },

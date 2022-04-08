@@ -26,7 +26,8 @@ for idx, s in enumerate(seqinfo):
 
 seqinfo = pd.read_csv('/export/home/agurtubay/agurtubay/Projects/Dysthal_qMRI/2_raw_data/NII/.heudiconv/048DYSTHAL06LH4003/ses-T01/info/dicominfo_ses-T01.tsv',sep='\t')
 for idx, s in enumerate(seqinfo):
- print(s.series_uid.split("202")[1][:5])
+ print(s.series_uid.split)
+ 
  print (diff_uid)
 
 

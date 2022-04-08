@@ -1,33 +1,31 @@
 #!/bin/bash
-#-c cwd
-#-m be
-# Loading modules:
-# Tasks of the job
 
-# Get all users in python to generate the file
-# with open('allsubs2.txt','a+') as myfile:
-# 	myfile.write(" ".join(map(str,A)))
+export root_raw_data_dir=/export/home/agurtubay/lab/MRI/DYSTHAL_MRI/DATA/images
+export project_dir=/export/home/agurtubay/agurtubay/Projects/Dysthal
+export scripts_dir=$project_dir/1_pipe_scripts/launchcontainers
+export raw_data_dir=$project_dir/2_raw_data
+export analy_dir=$project_dir/3_analysis
+export error_dir=$analy_dir/error
 
-# export basedir=/export/home/glerma/public/Gari/MAGNO2
-# export subj=T1_7851
-export sess=$2
-# export basedir=/export/home/glerma/public/Gari/MAGNO2
-basedir="/export/home/glerma/glerma/00local/PROYECTOS/MAGNO2/"
-basedir="/bcbl/home/public/KSHIPRA/dwibygari"
 
-read SUBJECTS < $1
-for sub in ${SUBJECTS};
-    do
-	export subj="$sub"
-	
-	printf "#########################################"
-	printf "############## $sub_$sess ###############"
-	printf "#########################################"
-	qsub    -q veryshort.q \
-		-N t-heudiconv_s-${sub}_s-${sess} \
-		-l mem_free=16G \
-		-v subj=$subj \
-		-v sess=$sess \
-		-v basedir=$basedir \
-		$pM/step2_heudiconv.sh 
+if [ ! -d $error_dir ] ;then
+    mkdir $error_dir
+fi 
+
+subjects=$(cat $raw_data_dir/subjects.txt)
+
+
+for subject in $subjects; do
+
+  #export subj=$subject
+  error=$error_dir/$subject.txt #output error file
+
+  echo "###### WORKING ON SUBJECT $subject ######"
+  qsub -q veryshort.q \
+    -l mem_free=16G \
+    -e $error \
+    -o $error \
+    -N heudiconv_${subject} \
+    $scripts_dir/step2_heudiconv_IPS.sh $subject
+
 done
