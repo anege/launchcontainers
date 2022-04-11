@@ -49,14 +49,22 @@ print(args.configFile)
 with open(args.configFile, 'r') as v:
     vars = json.load(v)
 
-basedir = vars["config"]["basedir"]
-print('Basedir: ')
-print(basedir)
+# basedir = vars["config"]["basedir"]
+# print('Basedir: ')
+# print(basedir)
+rawdir = vars["config"]["rawdir"]
+# print('Raw data dir: ')
+# print(rawdir)
+analydir = vars["config"]["analydir"]
+# print('Analysis dir: ')
+# print(analydir)
 rpe = vars["config"]["rpe"]
 # THIS ANALYSIS
 # tool   ="fs_7.1.1-03d"
 # tool   ="rtppreproc_1.1.3"
 tool = vars["config"]["tool"]
+# print('tool: ')
+# print(tool)
 analysis = vars["config"]["analysis"]
 
 
@@ -75,13 +83,14 @@ preanalysispp = vars["config"]["preanalysispp"]
 
 # Get the unique list of subjects and sessions
 codedir = vars["config"]["codedir"]
-subseslist = os.path.join(basedir, "subSesList.txt")
+subseslist = os.path.join(rawdir, "subSesList.txt")
 os.chdir(codedir)
 
 # READ THE FILE
 dt = pd.read_csv(subseslist, sep=",", header=0)
 for index in dt.index:
     sub = dt.loc[index, 'sub']
+    #print (sub)
    # if isinstance(sub.item(),int):
    #     sub=str(sub)
 
@@ -90,10 +99,12 @@ for index in dt.index:
     dwi = dt.loc[index, 'dwi']
     func = dt.loc[index, 'func']
     if ('fs' in tool or 'anatrois' in tool) and RUN:
+
+        print ('in loop')
         # Main source dir
         if pre_fs:
-            srcAnatPath = os.path.join(basedir,'derivatives',pretoolfs,'analysis-'+preanalysisfs,
-                                       'sub-'+sub, 'ses-'+ses,'output')
+            srcAnatPath = os.path.join(analydir,'derivatives',pretoolfs,'analysis-'+preanalysisfs,
+                                       sub, 'ses-'+ses,'output')
             zips = sorted(glob.glob(os.path.join(srcAnatPath,prefs_zipname+'*')),key=os.path.getmtime)
             try:
                 src_anatomical = zips[-1]
@@ -102,14 +113,16 @@ for index in dt.index:
                 continue
         else:
             src_anatomical = os.path.join(
-                basedir, 'sub-'+sub, 'ses-'+ses, 'anat', 'sub-'+sub+'_ses-'+ses+'_T1w.nii.gz')
+                rawdir,'NII', sub, 'ses-'+ses, 'anat', sub+'_ses-'+ses+'_T1w.nii.gz')
+            print('src_anatomical: ')
+            print(src_anatomical)
         
         # Main destination  dir
-        dstDirIn = os.path.join(basedir, 'derivatives', tool,
-                                'analysis-'+analysis, 'sub-'+sub, 'ses-'+ses, 'input')
-        dstDirOp = os.path.join(basedir,  'derivatives', tool,
-                                'analysis-'+analysis, 'sub-'+sub, 'ses-'+ses, 'output')
-        dstDirAn = os.path.join(basedir,  'derivatives', tool,
+        dstDirIn = os.path.join(analydir, 'derivatives', tool,
+                                'analysis-'+analysis, sub, 'ses-'+ses, 'input')
+        dstDirOp = os.path.join(analydir,  'derivatives', tool,
+                                'analysis-'+analysis, sub, 'ses-'+ses, 'output')
+        dstDirAn = os.path.join(analydir,  'derivatives', tool,
                                 'analysis-'+analysis)
 
 
@@ -195,28 +208,28 @@ for index in dt.index:
 
     if 'rtppreproc' in tool and RUN and dwi:
         # Main source dir
-        srcDir=os.path.join(basedir, 'sub-'+sub, 'ses-'+ses)
+        srcDir=os.path.join(analydir, sub, 'ses-'+ses)
         # FS source dir
-        srcDirfs=os.path.join(basedir, 'derivatives', pretoolfs,
-                                'analysis-'+preanalysisfs, 'sub-'+sub, 'ses-'+ses, 'output')
+        srcDirfs=os.path.join(analydir, 'derivatives', pretoolfs,
+                                'analysis-'+preanalysisfs, sub, 'ses-'+ses, 'output')
         # File dirs
         srcT1file=os.path.join(srcDirfs, "T1.nii.gz")
         srcMaskFile=os.path.join(srcDirfs, "brainmask.nii.gz")
 
         srcDwiF_niiFile=os.path.join(
-            srcDir, 'dwi', "sub-"+sub+"_ses-"+ses+"_acq-AP_dwi.nii.gz")
+            srcDir, 'dwi', sub+"_ses-"+ses+"_acq-AP_dwi.nii.gz")
         srcDwiF_bvalFile=os.path.join(
-            srcDir, 'dwi', "sub-"+sub+"_ses-"+ses+"_acq-AP_dwi.bval")
+            srcDir, 'dwi', sub+"_ses-"+ses+"_acq-AP_dwi.bval")
         srcDwiF_bvecFile=os.path.join(
-            srcDir, 'dwi', "sub-"+sub+"_ses-"+ses+"_acq-AP_dwi.bvec")
+            srcDir, 'dwi', sub+"_ses-"+ses+"_acq-AP_dwi.bvec")
 
         if rpe:
             srcDwiR_niiFile=os.path.join(
-                srcDir, 'dwi', "sub-"+sub+"_ses-"+ses+"_acq-PA_dwi.nii.gz")
+                srcDir, 'dwi', sub+"_ses-"+ses+"_acq-PA_dwi.nii.gz")
             srcDwiR_bvalFile=os.path.join(
-                srcDir, 'dwi', "sub-"+sub+"_ses-"+ses+"_acq-PA_dwi.bval")
+                srcDir, 'dwi', sub+"_ses-"+ses+"_acq-PA_dwi.bval")
             srcDwiR_bvecFile=os.path.join(
-                srcDir, 'dwi', "sub-"+sub+"_ses-"+ses+"_acq-PA_dwi.bvec")
+                srcDir, 'dwi', sub+"_ses-"+ses+"_acq-PA_dwi.bvec")
 
             # If bval and bvec do not exist because it is only b0-s, create them
             # (it would be better if dcm2niix would output them but...)
@@ -239,10 +252,10 @@ for index in dt.index:
                 f.close()
 
         # Main destination  dir
-        dstDir=os.path.join(basedir, 'derivatives', tool,
-                              'analysis-'+analysis, 'sub-'+sub, 'ses-'+ses, 'input')
-        dstDirOp=os.path.join(basedir, 'derivatives', tool,
-                                'analysis-'+analysis, 'sub-'+sub, 'ses-'+ses, 'output')
+        dstDir=os.path.join(analydir, 'derivatives', tool,
+                              'analysis-'+analysis, sub, 'ses-'+ses, 'input')
+        dstDirOp=os.path.join(analydir, 'derivatives', tool,
+                                'analysis-'+analysis, sub, 'ses-'+ses, 'output')
         # Create folders if they do not exist
         if not os.path.exists(dstDir):
             os.makedirs(dstDir)
@@ -290,10 +303,10 @@ for index in dt.index:
 
     if 'rtp-pipeline' in tool and RUN and dwi:
         # Main source dir
-        srcDirfs=os.path.join(basedir, 'derivatives', pretoolfs,
-                                'analysis-'+preanalysisfs, 'sub-'+sub, 'ses-'+'T01', 'output')
-        srcDirpp=os.path.join(basedir, 'derivatives', pretoolpp,
-                                'analysis-'+preanalysispp, 'sub-'+sub, 'ses-'+ses, 'output')
+        srcDirfs=os.path.join(analydir, 'derivatives', pretoolfs,
+                                'analysis-'+preanalysisfs, sub, 'ses-'+'T01', 'output')
+        srcDirpp=os.path.join(analydir, 'derivatives', pretoolpp,
+                                'analysis-'+preanalysispp, sub, 'ses-'+ses, 'output')
 
         src_anatomical=os.path.join(srcDirpp, 't1.nii.gz')
         src_fs=os.path.join(srcDirfs, 'fs.zip')
@@ -303,10 +316,10 @@ for index in dt.index:
         # We want to use the same tractparams.csv for all subjects, define later
 
         # Main destination  dir
-        dstDirIn=os.path.join(basedir, 'derivatives', tool,
-                                'analysis-'+analysis, 'sub-'+sub, 'ses-'+ses, 'input')
-        dstDirOp=os.path.join(basedir, 'derivatives', tool,
-                                'analysis-'+analysis, 'sub-'+sub, 'ses-'+ses, 'output')
+        dstDirIn=os.path.join(analydir, 'derivatives', tool,
+                                'analysis-'+analysis, sub, 'ses-'+ses, 'input')
+        dstDirOp=os.path.join(analydir, 'derivatives', tool,
+                                'analysis-'+analysis, sub, 'ses-'+ses, 'output')
         # Create folders if they do not exist
         if not os.path.exists(dstDirIn):
             os.makedirs(dstDirIn)
@@ -332,7 +345,7 @@ for index in dt.index:
         dstDwi_bvecFile=os.path.join(dstDirIn, "bvec", "dwi.bvec")
         dst_tractparams=os.path.join(
             dstDirIn, "tractparams", "tractparams.csv")
-        src_tractparams=os.path.join(basedir, 'derivatives', tool,
+        src_tractparams=os.path.join(analydir, 'derivatives', tool,
                                        'analysis-'+analysis, 'tractparams.csv')
 
         # Create the symbolic links
