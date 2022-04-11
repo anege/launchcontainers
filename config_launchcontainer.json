@@ -1,8 +1,9 @@
 {
     "config": {
-      "basedir": "/export/home/agurtubay/agurtubay/Projects/Dysthal/3_analysis",
+      "rawdir": "/export/home/agurtubay/agurtubay/Projects/Dysthal/2_raw_data",
+      "analydir": "/export/home/agurtubay/agurtubay/Projects/Dysthal/3_analysis",
       "rpe": true,
-      "tool": "anatROIs_4.2.7-7.1.1",
+      "tool": "anatrois_4.2.7-7.1.1",
       "analysis": "AL_01",
       "annotfile": "",
       "mniroizip": "",
