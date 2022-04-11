@@ -25,7 +25,7 @@ You must configure a remote that points to the upstream repository in Git (Gari'
 Logged in Broadmann, open Terminal.
 
 List the current configured remote repository for your fork.  
-`cd /home/agurtubay/agurtubay/Projects/Dysthal/1_pipe_scripts/launchcontainers`   
+`cd /bcbl/home/home_a-f/agurtubay/Projects/Dysthal/1_pipe_scripts/launchcontainers`   
 `git remote -v`
 
 Specify a new remote upstream repository that will be synced with the fork (se hace a nivel de repositorio, da igual el branch)  
