@@ -104,7 +104,7 @@ If I have 2 folders per subject and 3 T1s per folder, I only want the T1 from th
 
 ### 1.2 Convert dicom to nifti using convertall.py generated in the previous step
 
-> Make some tests on Brodmann. Edit options in step2_heudiconv.sh and make sure it works   
+ Make some tests on Brodmann. Edit options in step2_heudiconv.sh and make sure it works   
 `cd $scripts_dir`  
 `bash step2_heudiconv.sh`
 
@@ -120,6 +120,7 @@ Now let's do the same in the IPS cluster:
 - Check whether all files have been well created:  
 `cd $scripts_dir`  
 `bash check_converted_files.sh`
+They have to match information in Raw_data_dir/Subject_data.xlsx
 
 - Rename subjects to and keep conversion information  
 `cd $scripts_dir`  
@@ -141,7 +142,7 @@ and if possible only keep the anat files whose acq-time is the same as the diff
 `cd $scripts_dir`  
 `bash createSubSesList.sh.txt`  
 
-- Run createSymLinks: `python3 createSymLinks.py config_launchcontainer.json`
+- Run createSymLinks: `python3 createSymLinks_Ane.py config_launchcontainer.json`
 
 ## 3. launch containers: anatROIs, RTP-preproc or RTP-pipeline
 

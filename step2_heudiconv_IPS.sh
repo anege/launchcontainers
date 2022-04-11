@@ -14,6 +14,7 @@ subj=$1
 container_dir=/export/home/agurtubay/agurtubay/Projects/containers
 export basedir=/export/home/agurtubay/lab/MRI/DYSTHAL_MRI/DATA/images # basedir : where your dicom files are
 export outdir=/export/home/agurtubay/agurtubay/Projects/Dysthal/2_raw_data/NII
+export scripts_dir=/export/home/agurtubay/agurtubay/Projects/Dysthal/1_pipe_scripts/launchcontainers
 export sess=T01 #session
 
 module load singularity/3.5.2
@@ -32,10 +33,10 @@ module load singularity/3.5.2
 # Then run it after we create the Nifti/code/convertall.py file
 singularity run --bind /bcbl:/bcbl \
 	        --bind  ${basedir}:/base \
-			$container_dir/heudiconv_0.8.0.sif \
+			$container_dir/heudiconv_latest.sif \
 			--dicom_dir_template /base/{subject}/*/*/*.dcm \
 			--outdir ${outdir}/ \
-			--heuristic ${outdir}/code/convertall_ANE.py \
+			--heuristic ${scripts_dir}/convertall_ANE.py \
 			--subjects ${subj} \
 			--ses ${sess} \
 			--converter dcm2niix \

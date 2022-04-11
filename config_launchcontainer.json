@@ -1,6 +1,6 @@
 {
     "config": {
-      "basedir": "lab/MRI/DYSTHAL_MRI/",
+      "basedir": "/export/home/agurtubay/agurtubay/Projects/Dysthal/3_analysis",
       "rpe": true,
       "tool": "anatROIs_4.2.7-7.1.1",
       "analysis": "AL_01",
