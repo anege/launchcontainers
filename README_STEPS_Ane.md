@@ -1,6 +1,8 @@
 # Basic commands:
 
-See existing branches. Asterisk in the branch you are right now  
+> IMPORTANT! Once on directory containing the .git folder:    
+
+  See existing branches. Asterisk in the branch you are right now  
 `git branch`  
 Create new_branch  
 `git branch new-branch`  
@@ -140,15 +142,50 @@ and if possible only keep the anat files whose acq-time is the same as the diff
 
 - Create subSesList.txt in raw_data directory:  
 `cd $scripts_dir`  
-`bash createSubSesList.sh.txt`  
+`bash createSubSesList.sh`
+> Names cannot begin with numbers!  
 
-- Run createSymLinks: `python3 createSymLinks_Ane.py config_launchcontainer.json`
 
-## 3. launch containers: anatROIs, RTP-preproc or RTP-pipeline
+- Run createSymLinks:   
+`module load python/python3.6`  
+`python3 createSymLinks_Ane.py config_launchcontainer_SymLinks.json`
 
-- I have to edit qsub_generic.sh or qsub_generic.py?
+- It should create derivatives/$tool dir in $analysis_dir (as specified in createSunlinks_Ane.py)
+
+- For each container, it will create different links. For anatrois container, only links anatomical data. For RTP-preproc it will link both anatomical and diff data
+
+## 3. Launch containers: anatROIs, RTP-preproc or RTP-pipeline
+
+- Add [config_anatrois.json](https://github.com/garikoitz/anatROIs/blob/master/example_config.json) to ~/derivatives/anatrois_4.2.7-7.1.1/analysis-AL_01/folder and edit if necessary. It has to be named 'config.json' in analysis folder. (or edit it in runSingularity.sh)
 
 - Launch container: `python3 qsub_generic.py config_launchcontainer.json` 
+
+> For instance, launch anatrois container:
+`python3 qsub_generic_Ane.py config_launchcontainer_anatrois.json`  
+
+- It will only run subjects specified in $raw_data/subSesList.txt
+
+- qsub_generic.py calls qsub_generic.sh, which calls runSingularity.sh
+
+- Add mail info to runSingularity.sh
+
+# TIPS:
+
+- All your computations will be put in derivatives folder.
+
+- before RTP-preproc: set FS=true (in json file), so it uses FS mask and not the bet from FSL (bad job)
+
+- If I want to test something in python:  
+`module load python/python3.6`  
+`python 3`
+
+- To check code in container:
+Enter in the container:
+`cd $container_dir`  
+`singularity shell anatrois_4.2.7-7.1.1.sif`  
+Once inside, their codes are normally stored in  
+`cd /flywheel/v0/run`
+
 
 
 

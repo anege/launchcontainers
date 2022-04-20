@@ -1,4 +1,6 @@
 #!/bin/bash
+#$ -M a.gurtubay@bcbl.eu
+#$ -m be
 #PBS -l cput=1000:00:00
 
 # be alart

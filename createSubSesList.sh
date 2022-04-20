@@ -27,7 +27,7 @@ for subject in $subjects; do
         dwi_exist=False
     fi
 
-    echo -e ${subject}",T01,True,"$anat_exist","${dwi_exist}",False" >> $subSestxt
+    echo -e ${subject}",T01,False,"$anat_exist","${dwi_exist}",False" >> $subSestxt
 
 
 done

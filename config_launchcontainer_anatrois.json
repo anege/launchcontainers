@@ -1,0 +1,39 @@
+{
+    "config": {
+      "rawdir": "/export/home/agurtubay/agurtubay/Projects/Dysthal/2_raw_data",
+      "analydir": "/export/home/agurtubay/agurtubay/Projects/Dysthal/3_analysis",
+      "rpe": true,
+      "tool": "anatrois_4.2.7-7.1.1",
+      "analysis": "AL_01",
+      "annotfile": "",
+      "mniroizip": "",
+      "pre_fs":false,
+      "pretoolfs":"",
+      "preanalysisfs":"",
+      "prefs_zipname":"",
+      "pretoolpp":"",
+      "preanalysispp":"",
+      "codedir":"/export/home/agurtubay/agurtubay/Projects/Dysthal/1_pipe_scripts/launchcontainers",
+      "host": "BCBL",
+      "logdir":"/export/home/agurtubay/agurtubay/Projects/Dysthal/3_analysis/logs",
+      "tmpdir":"/export/home/agurtubay/agurtubay/Projects/Dysthal/3_analysis/sing_tmp",
+      "container":"/export/home/agurtubay/agurtubay/Projects/containers",
+      "qsub":"true"
+    },
+    "BCBL": {
+      "mem":"32G",
+      "que":"long.q",
+      "core":6,
+      "sin_ver":"singularity/3.5.2"
+    },
+    "DIPC": {
+      "mem":"8G",
+      "que":"regular",
+      "core":24,
+      "sin_ver":"Singularity/3.5.3-GCC-8.3.0",
+      "manager":"slurm",
+      "system":"lscratch",
+      "maxwall":1
+    }
+  }
+  

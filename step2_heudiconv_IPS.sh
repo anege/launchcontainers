@@ -1,7 +1,5 @@
 #!/bin/bash
 #$ -q long.q
-#$ -o out.txt
-#$ -e err.txt
 #$ -M a.gurtubay@bcbl.eu
 #$ -N heudiconv
 #$ -S /bin/bash

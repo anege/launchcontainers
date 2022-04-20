@@ -178,8 +178,8 @@ for index in dt.index:
             dstAnatomicalFile = os.path.join(dstDirIn, 'pre_fs',"existingFS.zip")
         else:
             dstAnatomicalFile = os.path.join(dstDirIn, 'anat', "T1.nii.gz")
-        dstAnnotfile      = os.path.join(dstDirIn, 'annotfile',"annots.zip")
-        dstMniroizip      = os.path.join(dstDirIn, 'mniroizip',"mniroizip.zip")
+            dstAnnotfile      = os.path.join(dstDirIn, 'annotfile',"annots.zip")
+            dstMniroizip      = os.path.join(dstDirIn, 'mniroizip',"mniroizip.zip")
 
         # Create the symbolic links
         if os.path.isfile(dstAnatomicalFile):
