@@ -186,7 +186,14 @@ Enter in the container:
 Once inside, their codes are normally stored in  
 `cd /flywheel/v0/run`
 
+# STEP 5: Rename branch
 
+- Go to the branch you want to rename (qMRI_ane branch) and `git branch -m new_name`. For instance:  
+ `git branch -m ane_tests`   
+
+- Delete the remote git branch in gitkraken: (delete origin/qMRI_ane branch)
+
+- Push ane_tests, and it will ask where to push it. There you can rename the new branch
 
 
 
