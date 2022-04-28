@@ -11,7 +11,7 @@ export error_dir=$analy_dir/error
 subj_nrs="$(seq -f "%03g" 1 91)"
 arr=( ${subj_nrs} ) #convert string to array
 array=( "${arr[@]/#/sub-}" ) #preprend sub-
-subjects=$(echo $( IFS=$' '; echo "${array[*]}" )) #convert back to string
+subjects=$(echo $( IFS=$' '; echo "${array[*]}" )) #convert array to string
 echo $subjects
 
 
