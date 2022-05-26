@@ -128,12 +128,17 @@ They have to match information in Raw_data_dir/Subject_data.xlsx
 `cd $scripts_dir`  
 `bash rename_subj.sh`
 
+-Some subjects have
 
 - This will give 3 T1s in some subjects. To solve this,
 Check NII/$subject/ses-T01/$subject_ses-T01_scans.tsv
 and if possible only keep the anat files whose acq-time is the same as the diff  
 `cd $scripts_dir`  
 `bash clean_duplicated_T1.sh`
+
+- check T1s:  
+`cd $scripts_dir`
+`bash check_t1s.sh`
 
 
 ## 2. Create symbolic links (to save space when running containers)
