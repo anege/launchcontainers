@@ -35,7 +35,7 @@ Specify a new remote upstream repository that will be synced with the fork (se h
 Verify the new upstream repository you've specified for your fork.  
 `git remote -v`
 
-# STEP 2: [Synch the fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
+# STEP 2: [Sync the fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
 
 Fetch the branches and their respective commits from the upstream repository. Commits to master will be stored in a local branch, upstream/master.  
 `git fetch upstream`
@@ -85,10 +85,13 @@ Solution: copy container already built from Gari:
 ### 1.1 Generate convertall.py by calling heudiconv
 
 - Install heudiconv container. [Follow instructions here](https://heudiconv.readthedocs.io/en/latest/installation.html#singularity)  
+`ssh agurtubay@ips-0-3`  
+`qlogin`  
+`module load singularity/3.7.0`  
 `cd $container_dir`  
 `singularity pull docker://nipy/heudiconv:latest`
 
-- Edit all the options in step1_emptyheudiconv.sh. This script calls singularity run, which then calls heudoconv.  
+- Edit all the options in step1_emptyheudiconv.sh. This script calls singularity run, which then calls heudiconv.  
 See singularity run options [here](https://sylabs.io/guides/3.1/user-guide/cli/singularity_run.html#singularity-run)  
 See heudiconv options [here](https://heudiconv.readthedocs.io/en/latest/usage.html#commandline-arguments)
 
@@ -199,12 +202,6 @@ Once inside, their codes are normally stored in
 - Delete the remote git branch in gitkraken: (delete origin/qMRI_ane branch)
 
 - Push ane_tests, and it will ask where to push it. There you can rename the new branch
-
-
-
-# NEXT...
-
-MRF_raw_dir=/export/home/agurtubay/lab/MRI/DYSTHAL_MRI/DATA/fingerprinting
 
 
 
